@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus | Futuristic Portfolio Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+
+            --primary: #0a0a0f;
+            --secondary: #141420;
+            --accent: #6366f1;
+            --accent-glow: #818cf8;
+            --accent-dark: #4f46e5;
+            --text: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --card-bg: rgba(30, 30, 46, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: rgba(0, 0, 0, 0.3);
+            
+
+            --section-padding: 5rem;
+            --card-padding: 2rem;
+            
+
+            --transition-smooth: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--secondary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-dark);
+        }
+        
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--accent-glow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo i {
+            font-size: 1.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        nav a:hover {
+            color: var(--text);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-glow));
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(129, 140, 248, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #f8fafc, var(--accent-glow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-5px) translateX(-50%);
+            }
+        }
+        
+
+        .projects-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+        
+
+        .project-section {
+            min-height: 90vh; 
+            display: flex;
+            align-items: center;
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .project-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+
+        .project-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: var(--card-padding);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: var(--transition-smooth);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: stretch; 
+            gap: 2rem;
+            width: 100%;
+            height: 500px; 
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, var(--glass-bg), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .project-card:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+        
+
+        .image-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            background: var(--secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition-smooth);
+            min-width: 0; 
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: var(--transition-smooth);
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .project-card:hover .image-container {
+            transform: scale(1.02);
+        }
+        
+        .project-card:hover .project-image {
+            transform: scale(1.03);
+        }
+        
+        .image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transform: translateX(-100%);
+        }
+        
+        .project-card:hover .image-container::after {
+            animation: shimmer 1.5s;
+        }
+        
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        .project-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+        
+
+        .content-container {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0; 
+        }
+        
+        .project-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--text), var(--accent-glow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            flex-grow: 1;
+        }
+        
+
+        .project-section:nth-child(odd) .project-card {
+            flex-direction: row;
+        }
+        
+
+        .project-section:nth-child(even) .project-card {
+            flex-direction: row-reverse;
+        }
+        
+
+        .project-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.9rem 2rem;
+            background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .project-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+        
+        .project-button:hover::before {
+            opacity: 1;
+        }
+        
+        .project-button i {
+            transition: transform 0.3s ease;
+        }
+        
+        .project-button:hover i {
+            transform: translateX(5px);
+        }
+        
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--secondary);
+            border-top: 1px solid var(--glass-border);
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+
+        @media (max-width: 1024px) {
+            .project-card {
+                height: auto;
+                min-height: 500px;
+                flex-direction: column !important;
+                gap: 1.5rem;
+            }
+            
+            .image-container {
+                height: 250px;
+            }
+            
+            .content-container {
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .projects-container {
+                padding: 0 1rem 4rem;
+            }
+            
+            .project-section {
+                padding: 2rem 0;
+                min-height: auto;
+            }
+            
+            .project-card {
+                padding: 1.5rem;
+                height: auto;
+                min-height: 400px;
+                flex-direction: column !important;
+            }
+            
+            .project-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .image-container {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fas fa-infinity"></i>
+            <span>References</span>
+        </div>
+    </header>
+
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>References</h1>
+            <p>This website was made by Abdelrahman Mahmoud (ID:20255107) for the references.</p>
+            <a href="#project-1" class="project-button">
+                Explore References <i class="fas fa-arrow-down"></i>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    
+    <main id="projects" class="projects-container">
+
+        <section id="project-1" class="project-section">
+            <div class="project-card">
+                <div class="project-number">01</div>
+                <div class="image-container">
+                    <img src="https://image2url.com/images/1765902509374-4f9419ef-1d35-450a-9c03-4ad3dc71e557.webp" alt="International Fire & Safety" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">International Fire & Safety</h2>
+                    <p class="project-description">Reference 1.</p>
+                    <a href="https://internationalfireandsafetyjournal.com/the-environmental-impact-of-battery-disposal/#:~:text=Improperly%20disposed%20batteries%20contribute%20to,harmful%20gases%20into%20the%20atmosphere" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-2" class="project-section">
+            <div class="project-card">
+                <div class="project-number">02</div>
+                <div class="image-container">
+                    <img src="https://www.lipolbattery.com/image/logo.png" alt="LiPol Battery" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">LiPol Battery</h2>
+                    <p class="project-description">Reference 2.</p>
+                    <a href="https://www.lipolbattery.com/Compare-of-Lead-Acid-Battery-NiMH-Battery-Lithium-Ion-Battery.html" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-3" class="project-section">
+            <div class="project-card">
+                <div class="project-number">03</div>
+                <div class="image-container">
+                    <img src="https://image2url.com/images/1765902807790-31bf7c40-a9df-4f3b-813f-d06bfe9b5e69.png" alt="Science Direct" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">Science Direct</h2>
+                    <p class="project-description">Reference 3.</p>
+                    <a href="https://www.sciencedirect.com/topics/engineering/lead-acid-battery" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-4" class="project-section">
+            <div class="project-card">
+                <div class="project-number">04</div>
+                <div class="image-container">
+                    <img src="https://image2url.com/images/1765902952941-0dad15ae-6014-42a3-8a12-d566f5719631.png" alt="Electrical 4 U" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">Electrical 4 U</h2>
+                    <p class="project-description">Reference 4.</p>
+                    <a href="https://www.electrical4u.com/working-of-lead-acid-battery-lead-acid-secondary-storage-battery/#google_vignette" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-5" class="project-section">
+            <div class="project-card">
+                <div class="project-number">05</div>
+                <div class="image-container">
+                    <img src="https://image2url.com/images/1765903343447-c0fd6974-047d-4fe1-a9f1-5c4ab84a892d.png" alt="European Association for Storage of Energy" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">European Association for Storage of Energy</h2>
+                    <p class="project-description">Reference 5.</p>
+                    <a href="https://energystorageeurope.eu/wp-content/uploads/2016/03/EASE_TD_NiMH.pdf" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-6" class="project-section">
+            <div class="project-card">
+                <div class="project-number">06</div>
+                <div class="image-container">
+                    <img src="https://image2url.com/images/1765904555145-b8e2a160-ed4f-463f-a1d5-5deb123b2cb1.webp" alt="HUAYITE" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">HUAYITE</h2>
+                    <p class="project-description">Reference 6.</p>
+                    <a href="https://hetsolarinverter.com/blog-detail/lead-acid-battery-uses-and-rechargeable-lead-acid-battery" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-7" class="project-section">
+            <div class="project-card">
+                <div class="project-number">07</div>
+                <div class="image-container">
+                    <img src="https://vlab.amrita.edu/theme/amrita/images/logo.png" alt="Amrita" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">Amrita</h2>
+                    <p class="project-description">Reference 7.</p>
+                    <a href="https://vlab.amrita.edu/?sub=77&brch=270&sim=1538&cnt=1" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-8" class="project-section">
+            <div class="project-card">
+                <div class="project-number">08</div>
+                <div class="image-container">
+                    <img src="https://vlab.amrita.edu/theme/amrita/images/logo.png" alt="Amrita" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">Amrita</h2>
+                    <p class="project-description">Reference 8.</p>
+                    <a href="https://vlab.amrita.edu/?sub=77&brch=270&sim=1540&cnt=1#:~:text=For%20example%2C%20if%20the%20battery%20has%20a,will%20provide%205.2%20Amps%20for%2010%20hours" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-9" class="project-section">
+            <div class="project-card">
+                <div class="project-number">09</div>
+                <div class="image-container">
+                    <img src="https://electricalampere.com/wp-content/uploads/2023/09/EA.png" alt="Electrical Ampere" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">Electrical Ampere</h2>
+                    <p class="project-description">Reference 9.</p>
+                    <a href="https://electricalampere.com/lead-acid-battery/" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-10" class="project-section">
+            <div class="project-card">
+                <div class="project-number">10</div>
+                <div class="image-container">
+                    <img src="https://www.ossila.com/cdn/shop/t/367/assets/ossila-logo-cropped-solid.svg?v=90346444705215197591765814481" alt="Ossila" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">Ossila</h2>
+                    <p class="project-description">Reference 10.</p>
+                    <a href="https://www.ossila.com/pages/lithium-ion-batteries" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-11" class="project-section">
+            <div class="project-card">
+                <div class="project-number">11</div>
+                <div class="image-container">
+                    <img src="https://pipingtechs.com/wp-content/uploads/2023/12/piping-technology.png" alt="Piping Technology" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">Piping Technology</h2>
+                    <p class="project-description">Reference 11.</p>
+                    <a href="https://pipingtechs.com/nickel-metal-hydride-battery/" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="project-12" class="project-section">
+            <div class="project-card">
+                <div class="project-number">12</div>
+                <div class="image-container">
+                    <img src="https://image2url.com/images/1765904314334-1dac8746-c8f9-4d60-96a4-62bd26366864.png" alt="How Electrical" class="project-image">
+                </div>
+                <div class="content-container">
+                    <h2 class="project-title">How Electrical</h2>
+                    <p class="project-description">Reference 12.</p>
+                    <a href="https://howelectrical.com/lead-acid-battery/" target="_blank" class="project-button">
+                        Visit Website <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="logo" style="justify-content: center; margin-bottom: 1.5rem;">
+                <i class="fas fa-infinity"></i>
+                <span>REFERENCES</span>
+            </div>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem;">
+                A showcase of 12 references that was included in the Report.
+            </p>
+            <p class="copyright">
+                &copy; 2026 Abdelrahman Mahmoud Hosny. All copyrights are saved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.8s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+                
+
+                const heroContent = document.querySelector('.hero-content');
+                heroContent.style.transform = 'translateY(20px)';
+                heroContent.style.opacity = '0';
+                heroContent.style.transition = 'all 0.8s ease 0.3s';
+                
+                setTimeout(() => {
+                    heroContent.style.transform = 'translateY(0)';
+                    heroContent.style.opacity = '1';
+                }, 50);
+            }, 100);
+        });
+
+
+        const projectSections = document.querySelectorAll('.project-section');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+
+                    const projectCard = entry.target.querySelector('.project-card');
+                    const imageContainer = entry.target.querySelector('.image-container');
+                    const contentContainer = entry.target.querySelector('.content-container');
+                    
+
+                    projectCard.style.transform = 'translateY(30px)';
+                    projectCard.style.opacity = '0';
+                    
+                    imageContainer.style.transform = 'scale(0.9)';
+                    imageContainer.style.opacity = '0';
+                    
+                    contentContainer.style.transform = 'translateY(20px)';
+                    contentContainer.style.opacity = '0';
+                    
+
+                    setTimeout(() => {
+                        projectCard.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        projectCard.style.transform = 'translateY(0)';
+                        projectCard.style.opacity = '1';
+                    }, 200);
+                    
+                    setTimeout(() => {
+                        imageContainer.style.transition = 'all 0.6s ease 0.2s';
+                        imageContainer.style.transform = 'scale(1)';
+                        imageContainer.style.opacity = '1';
+                    }, 400);
+                    
+                    setTimeout(() => {
+                        contentContainer.style.transition = 'all 0.6s ease 0.4s';
+                        contentContainer.style.transform = 'translateY(0)';
+                        contentContainer.style.opacity = '1';
+                    }, 600);
+                }
+            });
+        }, observerOptions);
+        
+        projectSections.forEach(section => {
+            observer.observe(section);
+        });
+
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+
+                if (this.getAttribute('href').startsWith('http')) return;
+                
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            
+            if (hero) {
+                const parallaxSpeed = 0.3;
+                hero.style.backgroundPosition = `center ${scrolled * parallaxSpeed}px`;
+            }
+            
+
+            const header = document.querySelector('header');
+            if (scrolled > 50) {
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.2)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+
+
+        document.querySelectorAll('.project-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = event.clientX - rect.left - size / 2;
+                const y = event.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    transform: scale(0);
+                    animation: ripple-animation 0.6s linear;
+                    width: ${size}px;
+                    height: ${size}px;
+                    top: ${y}px;
+                    left: ${x}px;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+
+        document.querySelectorAll('.image-container').forEach(container => {
+            container.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateY = ((x - centerX) / centerX) * 5; 
+                const rotateX = ((centerY - y) / centerY) * 5;
+                
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            container.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+    </script>
+</body>
+</html>
